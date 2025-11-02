@@ -10,12 +10,14 @@ use iutnc\deefy\exception\InvalidPropertyValueException;
 
 require_once 'vendor/autoload.php';
 
-class AddPodcastTrackAction extends Action{
-    public function execute() : string{
-        if(!isset($_SESSION['user'])){
-            return "Veuillez vous connecter";
+class AddPodcastTrackAction extends Action
+{
+    public function execute(): string
+    {
+        if (!isset($_SESSION['user'])) {
+            return "<p>Veuillez vous connecter</p>";
         }
-        if ($_SERVER['REQUEST_METHOD']=== 'GET'){
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             return <<<Limite
                 <form id="form-add" method="POST" action="?action=add-track">
                 <h2> Champs Obligatoires :  </h2>
@@ -81,97 +83,96 @@ class AddPodcastTrackAction extends Action{
                 <button type="submit">Envoyer</button>
                 </form>
             Limite;
-            } 
-            else{
+        } else {
 
-                // Paramètres obligatoires :
+            // Paramètres obligatoires :
 
-                $titre = filter_var($_POST['titre'],FILTER_SANITIZE_SPECIAL_CHARS);
-                $chemin = filter_var($_POST['chemin'],FILTER_SANITIZE_URL);
-                $webChemin = "src/classes/musiques/".basename($chemin); // chemin jusqu'au fichier de musiques
+            $titre = filter_var($_POST['titre'], FILTER_SANITIZE_SPECIAL_CHARS);
+            $chemin = filter_var($_POST['chemin'], FILTER_SANITIZE_URL);
+            $webChemin = "src/classes/musiques/" . basename($chemin); // chemin jusqu'au fichier de musiques
 
-                // Paramètres facultatifs :
+            // Paramètres facultatifs :
 
-                $genre = null;
-                if (!empty($_POST['genre'])) {
-                    $genre = filter_var($_POST['genre'], FILTER_SANITIZE_SPECIAL_CHARS);
-                }
-
-                $duree = null;
-                if (!empty($_POST['duree'])) {
-                    $duree = filter_var($_POST['duree'], FILTER_VALIDATE_INT);
-                }
-
-                if($duree === null){
-                    $duree = 1; // Obligatoire pour le setter d'un AudioTrack
-                }
-
-                $type = null;
-                if (!empty($_POST['type'])) {
-                    $type = filter_var($_POST['type'], FILTER_SANITIZE_SPECIAL_CHARS);
-                }
-
-                if($type !== 'A' && $type !== 'P'){
-                    $type = null;
-                }
-
-                $artisteAlb = null;
-                if (!empty($_POST['ArtisteAlb'])) {
-                    $artisteAlb = filter_var($_POST['ArtisteAlb'], FILTER_SANITIZE_SPECIAL_CHARS);
-                }
-
-                $titreAlb = null;
-                if (!empty($_POST['TitreAlb'])) {
-                    $titreAlb = filter_var($_POST['TitreAlb'], FILTER_SANITIZE_SPECIAL_CHARS);
-                }
-
-                $anneeAlb = null;
-                if (!empty($_POST['AnneeAlb'])) {
-                    $anneeAlb = filter_var($_POST['AnneeAlb'], FILTER_VALIDATE_INT);
-                }
-
-                $numAlb = null;
-                if (!empty($_POST['NumAlb'])) {
-                    $numAlb = filter_var($_POST['NumAlb'], FILTER_VALIDATE_INT);
-                }
-
-                $auteurPod = null;
-                if (!empty($_POST['AuteurPod'])) {
-                    $auteurPod = filter_var($_POST['AuteurPod'], FILTER_SANITIZE_SPECIAL_CHARS);
-                }
-
-                $datePod = null;
-                if (!empty($_POST['DatePod'])) {
-                    $datePod = filter_var($_POST['DatePod'], FILTER_SANITIZE_SPECIAL_CHARS);
-                }
-
-                $r = DeefyRepository::getInstance();
-                if (isset($_SESSION['playlist'])){ 
-                    $IdPlaylist = $r->getIdPlaylistByTitle($_SESSION['playlist'],$r->getIdUser($_SESSION['user']));   
-                    if($type === 'A'){
-                        $Piste = new AlbumTrack($titre,$webChemin,$titreAlb,$numAlb,$artisteAlb);
-                    }else{
-                        if($type === 'P'){
-                            $Piste = new PodcastTrack($titre,$webChemin,$auteurPod,$datePod);
-                        }else{
-                            $Piste = new AudioTrack($titre,$webChemin);
-                        }
-                    }
-                    if($anneeAlb === null){
-                        $Piste->date = $anneeAlb;
-                    }else{
-                        $Piste->date = (string) $anneeAlb;
-                    }
-                    $Piste->genre = $genre;
-                    try{  
-                        $Piste->duree = $duree;
-                    }catch(InvalidPropertyValueException $e){
-                        return $e->getmessage();
-                    }
-                    $r->ajouterTrack($Piste,$IdPlaylist);
-                    return "Track ajouté à la playlist {$_SESSION['playlist']}";
-                }
-                return "Echec de l'ajout";
+            $genre = null;
+            if (!empty($_POST['genre'])) {
+                $genre = filter_var($_POST['genre'], FILTER_SANITIZE_SPECIAL_CHARS);
             }
+
+            $duree = null;
+            if (!empty($_POST['duree'])) {
+                $duree = filter_var($_POST['duree'], FILTER_VALIDATE_INT);
+            }
+
+            if ($duree === null) {
+                $duree = 1; // Obligatoire pour le setter d'un AudioTrack
+            }
+
+            $type = null;
+            if (!empty($_POST['type'])) {
+                $type = filter_var($_POST['type'], FILTER_SANITIZE_SPECIAL_CHARS);
+            }
+
+            if ($type !== 'A' && $type !== 'P') {
+                $type = null;
+            }
+
+            $artisteAlb = null;
+            if (!empty($_POST['ArtisteAlb'])) {
+                $artisteAlb = filter_var($_POST['ArtisteAlb'], FILTER_SANITIZE_SPECIAL_CHARS);
+            }
+
+            $titreAlb = null;
+            if (!empty($_POST['TitreAlb'])) {
+                $titreAlb = filter_var($_POST['TitreAlb'], FILTER_SANITIZE_SPECIAL_CHARS);
+            }
+
+            $anneeAlb = null;
+            if (!empty($_POST['AnneeAlb'])) {
+                $anneeAlb = filter_var($_POST['AnneeAlb'], FILTER_VALIDATE_INT);
+            }
+
+            $numAlb = null;
+            if (!empty($_POST['NumAlb'])) {
+                $numAlb = filter_var($_POST['NumAlb'], FILTER_VALIDATE_INT);
+            }
+
+            $auteurPod = null;
+            if (!empty($_POST['AuteurPod'])) {
+                $auteurPod = filter_var($_POST['AuteurPod'], FILTER_SANITIZE_SPECIAL_CHARS);
+            }
+
+            $datePod = null;
+            if (!empty($_POST['DatePod'])) {
+                $datePod = filter_var($_POST['DatePod'], FILTER_SANITIZE_SPECIAL_CHARS);
+            }
+
+            $r = DeefyRepository::getInstance();
+            if (isset($_SESSION['playlist'])) {
+                $IdPlaylist = $r->getIdPlaylistByTitle($_SESSION['playlist'], $r->getIdUser($_SESSION['user']));
+                if ($type === 'A') {
+                    $Piste = new AlbumTrack($titre, $webChemin, $titreAlb, $numAlb, $artisteAlb);
+                } else {
+                    if ($type === 'P') {
+                        $Piste = new PodcastTrack($titre, $webChemin, $auteurPod, $datePod);
+                    } else {
+                        $Piste = new AudioTrack($titre, $webChemin);
+                    }
+                }
+                if ($anneeAlb === null) {
+                    $Piste->date = $anneeAlb;
+                } else {
+                    $Piste->date = (string) $anneeAlb;
+                }
+                $Piste->genre = $genre;
+                try {
+                    $Piste->duree = $duree;
+                } catch (InvalidPropertyValueException $e) {
+                    return $e->getmessage();
+                }
+                $r->ajouterTrack($Piste, $IdPlaylist);
+                return "Track ajouté à la playlist {$_SESSION['playlist']}";
+            }
+            return "Echec de l'ajout";
         }
     }
+}

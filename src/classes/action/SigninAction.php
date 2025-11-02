@@ -6,15 +6,17 @@ use iutnc\deefy\repository\DeefyRepository;
 use iutnc\deefy\auth\AuthnProvider;
 require_once 'vendor/autoload.php';
 
-class SigninAction extends Action{
-    public function execute() : string{
+class SigninAction extends Action
+{
+    public function execute(): string
+    {
         if (isset($_SESSION['user'])) {
             unset($_SESSION['user']);
         }
-        if(isset($_SESSION['playlist'])){
+        if (isset($_SESSION['playlist'])) {
             unset($_SESSION['playlist']);
         }
-        if ($_SERVER['REQUEST_METHOD']=== 'GET'){
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             return <<<Limite
                 <form id="form-add" method="POST" action="?action=signin">
                 <label> Email
@@ -26,19 +28,18 @@ class SigninAction extends Action{
                 <button type ="submit">Connexion</button>
                 </form>
             Limite;
-            } 
-            else{
-                $authn = new AuthnProvider();
-                try{
-                    if($authn::signin($_POST['mail'],$_POST['mdp'])=== true){
-                        $_SESSION['user'] = $_POST['mail'];
-                        return "<p style='color:green;'>Connexion réussie. Bienvenue {$_POST['mail']} !</p>";
-                    } else {
-                        return "<p style='color:red;'>Email ou mot de passe incorrect.</p>";
-                    }
-                }catch (AuthnException $e) {
-                    return "<p style='color:red;'>Erreur : {$e->getMessage()}</p>";
+        } else {
+            $authn = new AuthnProvider();
+            try {
+                if ($authn::signin($_POST['mail'], $_POST['mdp']) === true) {
+                    $_SESSION['user'] = $_POST['mail'];
+                    return "<p style='color:green;'>Connexion réussie. Bienvenue {$_POST['mail']} !</p>";
+                } else {
+                    return "<p style='color:red;'>Email ou mot de passe incorrect.</p>";
                 }
-            } 
+            } catch (AuthnException $e) {
+                return "<p style='color:red;'>Erreur : {$e->getMessage()}</p>";
+            }
         }
     }
+}

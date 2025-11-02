@@ -1,26 +1,30 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 namespace iutnc\deefy\render;
 use iutnc\deefy\audio\tracks\AlbumTrack;
 require_once 'vendor/autoload.php';
 
 
-class AlbumTrackRenderer extends AudioTrackRenderer{
+class AlbumTrackRenderer extends AudioTrackRenderer
+{
 
     private AlbumTrack $Album;
 
-    public function __construct(AlbumTrack $A){
-        $this -> Album = $A;
+    public function __construct(AlbumTrack $A)
+    {
+        $this->Album = $A;
     }
 
-    protected function renderCompact(): String{
+    protected function renderCompact(): string
+    {
         return "<div class = 'track-compact'>
             <p>{$this->Album->numero}.{$this->Album->titre}</p>
             <audio controls src='{$this->Album->chemin}'></audio>
         </div>";
     }
 
-    protected function renderLong(): String {
+    protected function renderLong(): string
+    {
         return "<div class='track-long'>
             <h2>{$this->Album->titre}</h2>
             <p>Artiste : {$this->Album->auteur}</p>
@@ -31,6 +35,6 @@ class AlbumTrackRenderer extends AudioTrackRenderer{
         </div>";
     }
 
-    
+
 
 }

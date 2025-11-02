@@ -1,11 +1,13 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 namespace iutnc\deefy\render;
 
-abstract class AudioTrackRenderer implements Renderer{
+abstract class AudioTrackRenderer implements Renderer
+{
 
-    function render(int $selector): String{
-        switch($selector){
+    function render(int $selector): string
+    {
+        switch ($selector) {
             case Renderer::COMPACT:
                 return $this->renderCompact();
             case Renderer::LONG:
@@ -15,8 +17,8 @@ abstract class AudioTrackRenderer implements Renderer{
         }
     }
 
-    protected abstract function renderCompact(): String;
-    protected abstract function renderLong(): String;
+    protected abstract function renderCompact(): string;
+    protected abstract function renderLong(): string;
 
 }
 

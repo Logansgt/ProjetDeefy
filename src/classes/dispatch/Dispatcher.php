@@ -5,15 +5,18 @@ namespace iutnc\deefy\dispatch;
 use iutnc\deefy\action as a;
 require_once 'vendor/autoload.php';
 
-class Dispatcher{
+class Dispatcher
+{
 
     private string $action;
 
-    public function __construct(string $s){
+    public function __construct(string $s)
+    {
         $this->action = $s;
     }
 
-    public function run(){
+    public function run()
+    {
         $protectedActions = ['playlist', 'add-playlist', 'add-track'];
         $html = "";
         if (in_array($this->action, $protectedActions) && !isset($_SESSION['user'])) {
@@ -21,7 +24,7 @@ class Dispatcher{
             exit();
         }
 
-        switch($this->action){
+        switch ($this->action) {
             case 'playlist':
                 $html = (new a\DisplayPlaylistAction())->execute();
                 break;
@@ -48,14 +51,15 @@ class Dispatcher{
     }
 
 
-    public function renderPage(string $s): void{
+    public function renderPage(string $s): void
+    {
         $menu = "";
         if (!isset($_SESSION['user'])) {
             $menu = <<<HTML
                 <li><a href="?action=add-user">Créer un compte</a></li>
                 <li><a href="?action=signin">Se connecter</a></li>
             HTML;
-        }else{
+        } else {
             $menu = <<<HTML
                 <li><a href=".">Se déconnecter</a></li>
                 <li><a href="?action=playlist">Playlists</a></li>
@@ -68,10 +72,11 @@ class Dispatcher{
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="src/css/style.css">
             <title>Ma première page HTML</title>
         </head>
         <body>
-            <ul>
+            <ul class="menu">
                 {$menu}
             </ul>
             {$s}

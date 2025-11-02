@@ -1,27 +1,31 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 namespace iutnc\deefy\render;
 use iutnc\deefy\audio\tracks\PodcastTrack;
 require_once 'vendor/autoload.php';
 
 
-class PodcastRenderer extends AudioTrackRenderer{
+class PodcastRenderer extends AudioTrackRenderer
+{
 
     private PodcastTrack $podcast;
 
-    public function __construct(PodcastTrack $P){
-        $this -> podcast = $P;
+    public function __construct(PodcastTrack $P)
+    {
+        $this->podcast = $P;
     }
 
-    
-    protected function renderCompact(): String{
+
+    protected function renderCompact(): string
+    {
         return "<div class = 'track-compact'>
             <p>{$this->podcast->titre}</p>
             <audio controls src='{$this->podcast->chemin}'></audio>
         </div>";
     }
 
-    protected function renderLong(): String {
+    protected function renderLong(): string
+    {
         return "<div class='track-long'>
             <h2>{$this->podcast->titre}</h2>
             <p>Artiste : {$this->podcast->auteur}</p>

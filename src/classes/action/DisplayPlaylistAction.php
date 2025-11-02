@@ -8,12 +8,14 @@ use iutnc\deefy\render\AlbumTrackRenderer;
 use iutnc\deefy\repository\DeefyRepository;
 require_once 'vendor/autoload.php';
 
-class DisplayPlaylistAction extends Action{
+class DisplayPlaylistAction extends Action
+{
 
-    public function execute(): string{
+    public function execute(): string
+    {
 
-        if(!isset($_SESSION['user'])){
-            return "Veuillez vous connecter";
+        if (!isset($_SESSION['user'])) {
+            return "<p>Veuillez vous connecter</p>";
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['playlist_id'])) {
@@ -22,20 +24,20 @@ class DisplayPlaylistAction extends Action{
             $_SESSION['playlist'] = $r->trouverPlaylist($_SESSION['playlist_id']);
         }
 
-        if (isset($_SESSION['playlist'])){
+        if (isset($_SESSION['playlist'])) {
             $r = DeefyRepository::getInstance();
             $idUser = $r->getIdUser($_SESSION['user']);
-            $pl = $r->reconstituerPlaylist($_SESSION['playlist'],$idUser);
+            $pl = $r->reconstituerPlaylist($_SESSION['playlist'], $idUser);
             $resultHtml = "Playlist {$_SESSION['playlist']} :";
-            foreach($pl->listeAudio as $k=>$v){
-                if($v instanceof AlbumTrack){
+            foreach ($pl->listeAudio as $k => $v) {
+                if ($v instanceof AlbumTrack) {
                     $rend = new AlbumTrackRenderer($v);
-                }else{
+                } else {
                     $rend = new PodcastRenderer($v);
                 }
                 $trackId = $v->id;
-                $resultHtml = $resultHtml.$rend->render(1);
-                $resultHtml = $resultHtml.<<<HTML
+                $resultHtml = $resultHtml . $rend->render(1);
+                $resultHtml = $resultHtml . <<<HTML
                 <p></p>
                 <form method="POST" action="?action=supprimer" style="display:inline">
                 <input type="hidden" name="track_id" value="{$trackId}">
@@ -43,18 +45,17 @@ class DisplayPlaylistAction extends Action{
                 </form>
             HTML;
             }
-                return <<<HTML
+            return <<<HTML
                 <li><a href="?action=add-track">Ajouter Track</a></li>
                 <p></p>
-                HTML.$r->listerPlaylistUser($idUser)."<p></p>".$resultHtml;
-        }else{
+                HTML . $r->listerPlaylistUser($idUser) . "<p></p>" . $resultHtml;
+        } else {
             $r = DeefyRepository::getInstance();
             $idUser = $r->getIdUser($_SESSION['user']);
             $res = $r->listerPlaylistUser($idUser);
-            if($res === null){
+            if ($res === null) {
                 return "Aucune playlist enregistrée";
-            }
-            else{
+            } else {
                 return $res;
             }
         }

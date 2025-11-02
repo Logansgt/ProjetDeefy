@@ -1,0 +1,48 @@
+body {
+  background-color: #eee6d8;
+  font-family: "Inter", "Poppins", "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  color: black;
+  letter-spacing: 0.3px;
+  line-height: 1.6;
+}
+
+.menu {
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+  background-color: #93441a;
+  color: #e5e7e6;
+  font-weight: bold;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+a:hover {
+  opacity: 0.7;
+}
+ul,
+li {
+  list-style: none;
+  background-color: #93441a;
+}
+
+button {
+  background-color: #93441a;
+  color: #e5e7e6;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+label,
+h2,
+p {
+  color: #93441a;
+  padding: 5px;
+  font-weight: bolder;
+}
