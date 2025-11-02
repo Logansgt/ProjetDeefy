@@ -37,6 +37,9 @@ class Dispatcher{
             case 'signin':
                 $html = (new a\SigninAction)->execute();
                 break;
+            case 'supprimer':
+                $html = (new a\SupprimerTrackAction)->execute();
+                break;
             default:
                 $html = (new a\DefaultAction())->execute();
                 break;

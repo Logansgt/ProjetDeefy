@@ -113,9 +113,11 @@ class DeefyRepository{
             if(!empty($res3)){
                 if($res3['type']==="P"){
                     $pod = new PodcastTrack($res3['titre'],$res3['filename']);
+                    $pod->id =(int)$piste['id']; 
                     $pl->ajouterPiste($pod);
                 }else{
                     $tr = new PodcastTrack($res3['titre'],$res3['filename']);
+                    $tr->id = (int)$piste['id'];
                     $pl->ajouterPiste($tr);
                 }
             }
@@ -189,6 +191,19 @@ class DeefyRepository{
         $stmt2->bindParam(2,$lastId);
         $stmt2->bindParam(3,$compteur);
         $stmt2-> execute();
+    }
+
+    public function supprimerTrack(int $idTrack,int $idPlaylist){
+        $suppLien = "DELETE FROM playlist2track WHERE id_track = ? and id_pl = ?";
+        $stmt = $this->pdo->prepare($suppLien);
+        $stmt->bindParam(1,$idTrack);
+        $stmt->bindParam(2,$idPlaylist);
+        $stmt ->execute();
+
+        $suppTrack = "DELETE FROM track WHERE id = ?";
+        $stmt2 = $this->pdo->prepare($suppTrack);
+        $stmt2->bindParam(1,$idTrack);
+        $stmt2 ->execute();
     }
 
     // Partie Utilisateur
