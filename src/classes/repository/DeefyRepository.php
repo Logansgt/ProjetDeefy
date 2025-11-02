@@ -80,7 +80,7 @@ class DeefyRepository
             $resultHtml = $resultHtml . <<<HTML
             <form method="POST" action="?action=playlist" style="display:inline">
             <input type="hidden" name="playlist_id" value="{$id}">
-            <button type="submit">{$titres['nom']}</button>
+            <button type="submit" id="playlistButton">{$titres['nom']}</button>
             </form>
             HTML;
         }

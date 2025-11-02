@@ -20,67 +20,67 @@ class AddPodcastTrackAction extends Action
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             return <<<Limite
                 <form id="form-add" method="POST" action="?action=add-track">
-                <h2> Champs Obligatoires :  </h2>
-                <ul>
-                <li><label> Titre de la piste
-                <input type = "text" name = "titre" placeholder="Entrez le titre" required>
-                </label>
-                </li>
-                <li>
-                <label> File name
-                <input type = "text" name = "chemin" placeholder="fichier.mp3" required >
-                </label>
-                </li>
-                </ul>
-                <h2> Champs Non Obligatoires :  </h2>
-                <ul>
-                <li>
-                <label> Genre
-                <input type = "text" name = "genre">
-                </label>
-                </li>
-                <li>
-                <label> Duree
-                <input type = "number" name = "duree">
-                </label>
-                </li>
-                <li>
-                <label> Type (A ou P)
-                <input type = "Char" name = "type">
-                </label>
-                </li>
-                <li>
-                <label> Artiste Album
-                <input type = "text" name = "ArtisteAlb">
-                </label>
-                </li>
-                <li>
-                <label> Titre Album
-                <input type = "text" name = "TitreAlb">
-                </label>
-                </li>
-                <li>
-                <label> Annee Album
-                <input type = "number" name = "AnneeAlb">
-                </label>
-                </li>
-                <li>
-                 <label> Numéro Album
-                <input type = "number" name = "NumAlb">
-                </label>
-                </li>
-                <li>
-                 <label> Auteur Podcast
-                <input type = "text" name = "AuteurPod">
-                </label>
-                </li>
-                <li>
-                 <label> Date Podcast (YYYY-MM-DD)
-                <input type = "text" name = "DatePod">
-                </label>
-                </li>
-                </ul>
-                <button type="submit">Envoyer</button>
+                    <h2> Champs Obligatoires :  </h2>
+                    <ul>
+                        <li><label> Titre de la piste
+                            <input type = "text" name = "titre" placeholder="Entrez le titre" required>
+                            </label>
+                        </li>
+                        <li>
+                            <label> File name
+                            <input type = "text" name = "chemin" placeholder="fichier.mp3" required >
+                            </label>
+                        </li>
+                    </ul>
+                    <h2> Champs Non Obligatoires :  </h2>
+                    <ul>
+                        <li>
+                            <label> Genre
+                            <input type = "text" name = "genre">
+                            </label>
+                        </li>
+                        <li>
+                            <label> Duree
+                            <input type = "number" name = "duree">
+                            </label>
+                        </li>
+                        <li>
+                            <label> Type (A ou P)
+                            <input type = "Char" name = "type">
+                            </label>
+                        </li>
+                        <li>
+                            <label> Artiste Album
+                            <input type = "text" name = "ArtisteAlb">
+                            </label>
+                        </li>
+                        <li>
+                            <label> Titre Album
+                            <input type = "text" name = "TitreAlb">
+                            </label>
+                        </li>
+                        <li>
+                            <label> Annee Album
+                            <input type = "number" name = "AnneeAlb">
+                            </label>
+                        </li>
+                        <li>
+                            <label> Numéro Album
+                            <input type = "number" name = "NumAlb">
+                            </label>
+                        </li>
+                        <li>
+                            <label> Auteur Podcast
+                            <input type = "text" name = "AuteurPod">
+                            </label>
+                        </li>
+                        <li>
+                            <label> Date Podcast (YYYY-MM-DD)
+                            <input type = "text" name = "DatePod">
+                            </label>
+                        </li>
+                    </ul>
+                    <button type="submit">Envoyer</button>
                 </form>
             Limite;
         } else {

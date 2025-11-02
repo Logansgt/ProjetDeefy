@@ -15,7 +15,7 @@ class AddPlaylistAction extends Action
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             return <<<Limite
                 <form id="form-add" method="POST" action="?action=add-playlist">
-                <label> Nom de la playlist
+                <label class="orangeLabel"> Nom de la playlist
                 <input type = "text" name = "nom" placeholder="Entrez le titre" required>
                 </label>
                 </form>
