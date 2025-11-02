@@ -23,7 +23,8 @@ class DisplayPlaylistAction extends Action{
 
         if (isset($_SESSION['playlist'])){
             $r = DeefyRepository::getInstance();
-            $pl = $r->reconstituerPlaylist($_SESSION['playlist']);
+            $idUser = $r->getIdUser($_SESSION['user']);
+            $pl = $r->reconstituerPlaylist($_SESSION['playlist'],$idUser);
             $resultHtml = "Playlist {$_SESSION['playlist']} :";
             foreach($pl->listeAudio as $k=>$v){
                 $pr = new PodcastRenderer($v);
@@ -37,7 +38,6 @@ class DisplayPlaylistAction extends Action{
                 </form>
             HTML;
             }
-                $idUser = $r->getIdUser($_SESSION['user']);
                 return <<<HTML
                 <li><a href="?action=add-track">Ajouter Track</a></li>
                 <p></p>

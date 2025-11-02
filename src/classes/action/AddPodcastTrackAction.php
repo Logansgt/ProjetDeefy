@@ -21,12 +21,12 @@ class AddPodcastTrackAction extends Action{
                 <h2> Champs Obligatoires :  </h2>
                 <ul>
                 <li><label> Titre de la piste
-                <input type = "text" name = "titre" required>
+                <input type = "text" name = "titre" placeholder="Entrez le titre" required>
                 </label>
                 </li>
                 <li>
-                <label> File name (fichier.mp3)
-                <input type = "text" name = "chemin" required>
+                <label> File name
+                <input type = "text" name = "chemin" placeholder="fichier.mp3" required >
                 </label>
                 </li>
                 </ul>
@@ -147,7 +147,7 @@ class AddPodcastTrackAction extends Action{
 
                 $r = DeefyRepository::getInstance();
                 if (isset($_SESSION['playlist'])){ 
-                    $IdPlaylist = $r->getIdPlaylistByTitle($_SESSION['playlist']);   
+                    $IdPlaylist = $r->getIdPlaylistByTitle($_SESSION['playlist'],$r->getIdUser($_SESSION['user']));   
                     if($type === 'A'){
                         $Piste = new AlbumTrack($titre,$webChemin,$titreAlb,$numAlb,$artisteAlb);
                     }else{

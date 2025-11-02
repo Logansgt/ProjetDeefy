@@ -14,7 +14,7 @@ class AddPlaylistAction extends Action{
             return <<<Limite
                 <form id="form-add" method="POST" action="?action=add-playlist">
                 <label> Nom de la playlist
-                <input type = "text" name = "nom" required>
+                <input type = "text" name = "nom" placeholder="Entrez le titre" required>
                 </label>
                 </form>
             Limite;

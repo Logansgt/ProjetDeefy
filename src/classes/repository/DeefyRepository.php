@@ -86,8 +86,8 @@ class DeefyRepository{
         return $res['nom'];
     }
 
-    public function reconstituerPlaylist(string $playlist): ?Playlist{
-        $id = $this->getIdPlaylistByTitle($playlist);
+    public function reconstituerPlaylist(string $playlist, int $idUser): ?Playlist{
+        $id = $this->getIdPlaylistByTitle($playlist,$idUser);
         $sqlTrack = "SELECT id_track,no_piste_dans_liste FROM playlist2track WHERE id_pl = ?";
         $stmt2 = $this->pdo->prepare($sqlTrack);
         $stmt2->bindParam(1,$id);
@@ -125,16 +125,17 @@ class DeefyRepository{
         return $pl;
     }
 
-    public function getIdPlaylistByTitle(string $playlist): ?int{
-        $sql = "SELECT id FROM playlist WHERE nom = ?";
+    public function getIdPlaylistByTitle(string $playlist,int $idUser): ?int{
+        $sql = "SELECT u.id_pl FROM user2playlist u INNER JOIN playlist p ON u.id_pl = p.id WHERE p.nom = ? and u.id_user = ?";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(1,$playlist);
+        $stmt->bindParam(2,$idUser);
         $stmt->execute();
         $res = $stmt->fetch(\PDO::FETCH_ASSOC);
-        if($res === null){
+        if(!$res){
             return null;
         }
-        return (int) $res['id'];
+        return (int) $res['id_pl'];
     }
 
     public function ajouterTrack(AudioTrack $at,int $idPlaylist): void{

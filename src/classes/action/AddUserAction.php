@@ -11,10 +11,10 @@ class AddUserAction extends Action{
                 return <<<Limite
                 <form id="form-addUser" method="POST" action="?action=add-user">
                 <label> Email
-                <input type = "email" name = "mail" required>
+                <input type = "email" name = "mail" placeholder="me@gmail.com" required>
                 </label>
                 <label> Mot de passe
-                <input type = "password" name = "mdp" required>
+                <input type = "password" name = "mdp" placeholder="Entrez votre mot de passe" required>
                 </label>
                 <button type ="submit">S'inscrire</button>
                 </form>

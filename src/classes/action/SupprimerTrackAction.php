@@ -17,7 +17,7 @@ class SupprimerTrackAction extends Action{
         }
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['track_id']) && isset($_SESSION['playlist'])) {
             $r = DeefyRepository::getInstance();
-            $idPlaylist = $r->getIdPlaylistByTitle($_SESSION['playlist']);
+            $idPlaylist = $r->getIdPlaylistByTitle($_SESSION['playlist'],$r->getIdUser($_SESSION['user']));
             $idTrack = $_POST['track_id'];
             $r->supprimerTrack($idTrack,$idPlaylist);
             header('Location: ?action=playlist');
