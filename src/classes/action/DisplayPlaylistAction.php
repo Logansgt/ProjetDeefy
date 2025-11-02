@@ -4,6 +4,7 @@ namespace iutnc\deefy\action;
 use iutnc\deefy\audio\lists\Playlist;
 use iutnc\deefy\audio\tracks\AlbumTrack;
 use iutnc\deefy\render\PodcastRenderer;
+use iutnc\deefy\render\AlbumTrackRenderer;
 use iutnc\deefy\repository\DeefyRepository;
 require_once 'vendor/autoload.php';
 
@@ -27,9 +28,13 @@ class DisplayPlaylistAction extends Action{
             $pl = $r->reconstituerPlaylist($_SESSION['playlist'],$idUser);
             $resultHtml = "Playlist {$_SESSION['playlist']} :";
             foreach($pl->listeAudio as $k=>$v){
-                $pr = new PodcastRenderer($v);
+                if($v instanceof AlbumTrack){
+                    $rend = new AlbumTrackRenderer($v);
+                }else{
+                    $rend = new PodcastRenderer($v);
+                }
                 $trackId = $v->id;
-                $resultHtml = $resultHtml.$pr->render(1);
+                $resultHtml = $resultHtml.$rend->render(1);
                 $resultHtml = $resultHtml.<<<HTML
                 <p></p>
                 <form method="POST" action="?action=supprimer" style="display:inline">
