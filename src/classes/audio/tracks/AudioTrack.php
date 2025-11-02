@@ -4,7 +4,7 @@ namespace iutnc\deefy\audio\tracks;
 use iutnc\deefy\exception\InvalidPropertyNameException;
 use iutnc\deefy\exception\InvalidPropertyValueException;
 
- class AudioTrack {
+class AudioTrack {
 
     protected int $id;
     protected String $titre;

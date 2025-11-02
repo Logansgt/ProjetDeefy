@@ -18,6 +18,7 @@ class AddUserAction extends Action{
                 </label>
                 <button type ="submit">S'inscrire</button>
                 </form>
+                <p> Le mot de passe doit contenir : 1 digit, une minuscule/majuscule, un caractère spécial et au moins 10 caractères.</p>
                 Limite;
             }else{
                 try{

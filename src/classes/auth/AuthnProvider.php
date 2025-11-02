@@ -7,7 +7,7 @@ use iutnc\deefy\exception\AuthnException;
 use iutnc\deefy\repository\DeefyRepository;
 class AuthnProvider{
 
- static function signin(string $email, string $mdp):bool{
+static function signin(string $email, string $mdp):bool{
     try{
         if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
             throw new AuthnException("Email invalide");
@@ -18,21 +18,21 @@ class AuthnProvider{
             throw new AuthnException("Utilisateur inconnu");
         }
     }catch(AuthnException $e){
-         return false;
+        return false;
     }
     if(!password_verify($mdp,$hash)){
         return false;
     }
     return $r->userExistant($email);
- }
+}
 
- public static function register(string $email, string $mdp): bool {
+public static function register(string $email, string $mdp): bool {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new AuthnException("Email invalide");
         }
         $r = DeefyRepository::getInstance();
         if (!$r->checkPasswordStrength($mdp,10)) {
-            throw new AuthnException("Le mot de passe doit contenir : 1 digit, une minuscule/majuscule, un caractère spécial et 10 caractères");
+            throw new AuthnException("Le mot de passe doit contenir : 1 digit, une minuscule/majuscule, un caractère spécial et au moins 10 caractères");
         }
         $hash = $r->getHashUser($email);
         if ($hash !== null) {
